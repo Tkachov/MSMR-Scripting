@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectSchemaDefinitions xmlns="clr-namespace:Microsoft.Build.Framework.XamlTypes;assembly=Microsoft.Build.Framework">
+	<Rule Name="CustomSettings" PageTemplate="generic" DisplayName="Script settings">
+		<Rule.DataSource>
+			<DataSource Persistence="UserFile"/>
+		</Rule.DataSource> 
+		<StringProperty Name="GameDirectory"
+						DisplayName="Game Directory"
+						Description="Directory where .dll will be deployed to and game .exe will be run from"
+						Subtype="folder">
+		</StringProperty>
+	</Rule>
+</ProjectSchemaDefinitions>
