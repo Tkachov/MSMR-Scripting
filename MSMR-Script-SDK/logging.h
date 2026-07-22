@@ -32,9 +32,9 @@
 
 namespace logging {
     enum LogLevel {
+        DEBUG,
         INFO,
         WARN,
-        DEBUG,
         FATAL
     };
 

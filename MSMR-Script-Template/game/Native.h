@@ -18,7 +18,6 @@
 #include <queue>
 #include <functional>
 #include <mutex>
-
 #include "../scan.h"
 #include "../logging.h"
 #include "../utils.h"
@@ -75,7 +74,7 @@ struct NativeTypedef;
 
 #define SCAN_NATIVE(s, n, pt) \
     void Native::Initializers::s::Init_ ## n() { \
-        auto res = Scan::Internal::ScanModule(utils::GetGameExecutable().c_str(), pt); \
+        auto res = scan::internal::scan_module(utils::get_game_executable().c_str(), pt); \
         if (!res.found) { FATAL("Native::%s::%s not found!", #s, #n); return; } \
         Native::s::n = reinterpret_cast<Typedef_ ## s ## _ ## n::Type>(res.loc); \
         DEBUG(" - Native::%s::%s found at %p", #s, #n, Native::s::n); \
@@ -83,7 +82,7 @@ struct NativeTypedef;
 
 #define SCAN_NATIVE_OFFSET(s, n, pt, offset) \
     void Native::Initializers::s::Init_ ## n() { \
-        auto res = Scan::Internal::ScanModule(utils::GetGameExecutable().c_str(), pt); \
+        auto res = scan::internal::scan_module(utils::get_game_executable().c_str(), pt); \
         if (!res.found) { FATAL("Native::%s::%s not found!", #s, #n); return; } \
         Native::s::n = reinterpret_cast<Typedef_ ## s ## _ ## n::Type>(res.loc + offset); \
         DEBUG(" - Native::%s::%s found at %p", #s, #n, Native::s::n); \
@@ -91,7 +90,7 @@ struct NativeTypedef;
 
 #define SCAN_NATIVE_CALL(s, n, pt) \
     void Native::Initializers::s::Init_ ## n() { \
-        auto res = Scan::Internal::ScanModule(utils::GetGameExecutable().c_str(), pt); \
+        auto res = scan::internal::scan_module(utils::get_game_executable().c_str(), pt); \
         if (!res.found) { FATAL("Native::%s::%s not found!", #s, #n); return; } \
         int32_t offset; \
         std::memcpy(&offset, res.store, sizeof(res.store)); \
@@ -101,7 +100,7 @@ struct NativeTypedef;
 
 #define SCAN_NATIVE_REF(s, n, pt) \
     void Native::Initializers::s::Init_ ## n() { \
-        auto res = Scan::Internal::ScanModule(utils::GetGameExecutable().c_str(), pt); \
+        auto res = scan::internal::scan_module(utils::get_game_executable().c_str(), pt); \
         if (!res.found) { FATAL("Native::%s::%s not found!", #s, #n); return; } \
         int32_t offset; \
         std::memcpy(&offset, res.store, sizeof(res.store)); \
@@ -112,7 +111,7 @@ struct NativeTypedef;
 #define SCAN(pt, r, n, p) \
     r (*n) p = nullptr; \
     void Init_ ## n() { \
-        auto n ## _res = Scan::Internal::ScanModule(utils::GetGameExecutable().c_str(), pt); \
+        auto n ## _res = scan::internal::scan_module(utils::get_game_executable().c_str(), pt); \
         if (!n ## _res.found) { FATAL("%s not found!", #n); return; } \
         n = (r (*) p)n ## _res.loc; \
         DEBUG(" - %s found at %p", #n, n); \
@@ -121,7 +120,7 @@ struct NativeTypedef;
 #define SCAN_CALL(pt, r, n, p) \
     r (*n) p = nullptr; \
     void Init_ ## n() { \
-        auto n ## _res = Scan::Internal::ScanModule(utils::GetGameExecutable().c_str(), pt); \
+        auto n ## _res = scan::internal::scan_module(utils::get_game_executable().c_str(), pt); \
         if (!n ## _res.found) { FATAL("%s not found!", #n); return; } \
         int32_t offset; \
         std::memcpy(&offset, n ## _res.store, sizeof(n ## _res.store)); \
@@ -132,7 +131,7 @@ struct NativeTypedef;
 #define SCAN_REF(pt, t, n) \
     t n = nullptr; \
     void Init_ ## n() { \
-        auto n ## _res = Scan::Internal::ScanModule(utils::GetGameExecutable().c_str(), pt); \
+        auto n ## _res = scan::internal::scan_module(utils::get_game_executable().c_str(), pt); \
         if (!n ## _res.found) { FATAL("%s not found!", #n); return; } \
         int32_t offset; \
         std::memcpy(&offset, n ## _res.store, sizeof(offset)); \
@@ -142,7 +141,7 @@ struct NativeTypedef;
 
 #define SCAN_NOP(pt, n, b, o) \
     void Init_ ## n() { \
-        auto n ## _res = Scan::Internal::ScanModule(utils::GetGameExecutable().c_str(), pt); \
+        auto n ## _res = scan::internal::scan_module(utils::get_game_executable().c_str(), pt); \
         if (!n ## _res.found) { FATAL("%s not found!", #n); return; } \
         unsigned char* addr = (unsigned char*)n ## _res.loc; \
         DWORD oldProtect; \
@@ -156,7 +155,7 @@ struct NativeTypedef;
 
 #define SCAN_PATCH(pt, n, b) \
     void Init_ ## n() { \
-        auto n ## _res = Scan::Internal::ScanModule(utils::GetGameExecutable().c_str(), pt); \
+        auto n ## _res = scan::internal::scan_module(utils::get_game_executable().c_str(), pt); \
         if (!n ## _res.found) { FATAL("%s not found!", #n); return; } \
         unsigned char* addr = (unsigned char*)n ## _res.loc; \
         DWORD oldProtect; \

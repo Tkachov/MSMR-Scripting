@@ -5,13 +5,13 @@
 #include "ActorHandle.h"
 
 class HeroSystem {
-    void** vftable;
+    void** _vftable;
     char _0x8[0x14];
-    ActorHandle hero_handle;
+    ActorHandle _hero_handle;
 
 public:
     inline Actor* GetHero() {
-        return GetActor(&hero_handle);
+        return GetActor(&_hero_handle);
     }
 };
 

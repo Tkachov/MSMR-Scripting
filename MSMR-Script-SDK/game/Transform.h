@@ -37,11 +37,12 @@ inline Vector3 operator*(float scalar, const Vector3& v) {
     return v * scalar;
 }
 
-struct Transform {
+class Transform {
     char _0x0[0x30];
-    Vector3 position;
+    Vector3 _position;
 
+public:
     inline Vector3& GetPosition() {
-        return position;
+        return _position;
     }
 };

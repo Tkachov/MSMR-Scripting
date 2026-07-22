@@ -1,13 +1,8 @@
-// Overstrike -- an open-source mod manager for PC ports of Insomniac Games' games.
-// This program is free software, and can be redistributed and/or modified by you. It is provided 'as-is', without any warranty.
-// For more details, terms and conditions, see GNU General Public License.
-// A copy of the that license should come with this program (LICENSE.txt). If not, see <http://www.gnu.org/licenses/>.
-
 #pragma once
 
 #include <Windows.h>
 
-namespace Scan {
+namespace scan {
 	struct Pattern {
 		char* pattern;
 		char* mask;
@@ -33,21 +28,19 @@ namespace Scan {
 			return false;
 		}
 	};
-
-	typedef struct Pattern Pattern;
 	
-	Pattern Parse(const char* pattern);
+	Pattern parse(const char* pattern);
 
-	typedef struct {
+	struct ScanResult {
 		bool found;
 		uintptr_t loc;
 		char* store;
-	} ScanResult;
+	};
 
-	namespace Internal {
-		ScanResult ScanModule(const char* moduleName, Pattern pattern);
-		inline ScanResult ScanModule(const char* moduleName, const char* pattern) {
-			return ScanModule(moduleName, Parse(pattern));
+	namespace internal {
+		ScanResult scan_module(const char* module_name, Pattern pattern);
+		inline ScanResult scan_module(const char* module_name, const char* pattern) {
+			return scan_module(module_name, parse(pattern));
 		}
 	}
 }

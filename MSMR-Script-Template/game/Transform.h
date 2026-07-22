@@ -41,9 +41,9 @@ inline Vector3 operator*(float scalar, const Vector3& v) {
 
 struct Transform {
     char _0x0[0x30];
-    Vector3 position;
+    Vector3 _position;
 
     inline Vector3& GetPosition() {
-        return position;
+        return _position;
     }
 };

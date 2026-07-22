@@ -5,13 +5,13 @@
 #include "Transform.h"
 
 class Actor {
-    Transform* transform;
+    Transform* _transform;
     char _0x8[176];
 
 public:
     inline Vector3& GetPosition() {
-        if (transform) {
-            return transform->GetPosition();
+        if (_transform) {
+            return _transform->GetPosition();
         }
 
         static Vector3 invalid = Vector3 { -1e6, -1e6, -1e6 };
@@ -19,7 +19,7 @@ public:
     }
 
     inline Transform* GetTransform() {
-        return transform;
+        return _transform;
     }
 };
 

@@ -1,8 +1,3 @@
-// Overstrike -- an open-source mod manager for PC ports of Insomniac Games' games.
-// This program is free software, and can be redistributed and/or modified by you. It is provided 'as-is', without any warranty.
-// For more details, terms and conditions, see GNU General Public License.
-// A copy of the that license should come with this program (LICENSE.txt). If not, see <http://www.gnu.org/licenses/>.
-
 #pragma once
 
 #include <MinHook.h>
@@ -15,7 +10,7 @@
 	hooking::Hook<n> n ## _Hook( &n ## _Fn, &n ## _Call ); \
 
 #define INSTALL_AND_ENABLE(n, a, fm, sm) \
-	if (!n ## _Hook.Install(reinterpret_cast<void**>(a)) || !n ## _Hook.Enable()) { \
+	if (!n ## _Hook.install(reinterpret_cast<void**>(a)) || !n ## _Hook.enable()) { \
 		fm; \
 	} \
 	else { \
@@ -33,26 +28,31 @@
 namespace hooking {
 	template<typename T>
 	class Hook {
-		void* m_target = nullptr;
-		void* m_detour = nullptr;
-		T* m_original = nullptr;
+		void* _target = nullptr;
+		void* _detour = nullptr;
+		T* _original = nullptr;
+
 	public:
 		Hook() {}
+
 		template<typename T>
 		Hook(void* detour, T* original) {
-			m_detour = detour;
-			m_original = original;
+			_detour = detour;
+			_original = original;
 		}
-		bool Install(void* target) {
-			m_target = target;
-			MH_STATUS install = MH_CreateHook(target, m_detour, reinterpret_cast<void**>(m_original));
-			return install == MH_OK;
+
+		bool install(void* target) {
+			_target = target;
+			const MH_STATUS status = MH_CreateHook(_target, _detour, reinterpret_cast<void**>(_original));
+			return (status == MH_OK);
 		}
-		bool Enable() {
-			return MH_EnableHook(m_target) == MH_OK;
+
+		bool enable() {
+			return MH_EnableHook(_target) == MH_OK;
 		}
-		bool Disable() {
-			return MH_DisableHook(m_target) == MH_OK;
+
+		bool disable() {
+			return MH_DisableHook(_target) == MH_OK;
 		}
 	};
 }
