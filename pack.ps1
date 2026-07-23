@@ -33,6 +33,7 @@ $info = [ordered]@{
 }
 
 $infoJson = (ConvertTo-Json $info) -replace '\\u003e', '>'
+$infoJson = $infoJson -replace '\\u003c', '<'
 Set-Content -Path $infoPath -Value $infoJson -Encoding UTF8
 
 if (Test-Path $zipFile) { Remove-Item $zipFile -Force }
