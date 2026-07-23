@@ -12,7 +12,7 @@ Dependent scripts can use the .lib by including .h files from 'MSMR-Script-SDK/g
 
 To build the SDK .dll, you'd need to use vcpkg to download the dependencies. You may need to run `vcpkg integrate install` once to enable it.
 
-Both SDK's and template script's projects have an extra property, `$GameDirectory`, which can be set via project properties in MSVC. As a post-build step, the .dll is copied to 'scripts/' subfolder of that directory. You could also setup debug target to be the game executable with `-scripts -console` arguments for easier debugging.
+Both SDK's and template script's projects have an extra property, `$GameDirectory`, which can be set via project properties in MSVC. As a post-build step, .dll is copied to 'scripts/' subfolder of that directory. You could also setup debug target to be the game executable with `-scripts -console` arguments for easier debugging.
 
 # Credits and license
 
