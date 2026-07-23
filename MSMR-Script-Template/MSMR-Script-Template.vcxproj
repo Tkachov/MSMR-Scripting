@@ -44,12 +44,14 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros">
+  <PropertyGroup Label="ScriptMetadata">
     <ScriptName></ScriptName>
     <ScriptVersion>1.0.0</ScriptVersion>
+    <ScriptType>script</ScriptType>
     <ScriptAuthor></ScriptAuthor>
     <ScriptDependencies></ScriptDependencies>
   </PropertyGroup>
+  <PropertyGroup Label="UserMacros" />
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgUseStatic>true</VcpkgUseStatic>
   </PropertyGroup>
@@ -99,7 +101,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)pack.ps1" -DllPath "$(OutDir)$(TargetName)$(TargetExt)" -OutputDir "$(OutDir)" -ScriptName "$(ScriptName)" -ScriptVersion "$(ScriptVersion)" -ScriptAuthor "$(ScriptAuthor)" -ScriptDependencies "$(ScriptDependencies)" -GameDirectory "$(GameDirectory)"</Command>
+      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)pack.ps1" -DllPath "$(OutDir)$(TargetName)$(TargetExt)" -OutputDir "$(OutDir)" -ScriptName "$(ScriptName)" -ScriptVersion "$(ScriptVersion)" -ScriptType "$(ScriptType)" -ScriptAuthor "$(ScriptAuthor)" -ScriptDependencies "$(ScriptDependencies)" -GameDirectory "$(GameDirectory)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

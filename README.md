@@ -18,12 +18,13 @@ Both SDK's and template script's projects have an extra property, `$GameDirector
 
 In **Release** builds, the post-build step runs `pack.ps1` which packages the compiled .dll into a `.script` file (a ZIP archive containing the .dll and an `info.json` metadata file). The packaged `.script` is placed in the build output directory and, if `$GameDirectory` is set, also copied to its 'scripts/' subfolder. (`powershell.exe` / Windows PowerShell 5.1 is built into Windows 10 and 11, so no extra setup is required.)
 
-Script metadata is configured by editing the `UserMacros` `PropertyGroup` in the `.vcxproj` file:
+Script metadata is configured in the `ScriptMetadata` `PropertyGroup` in the `.vcxproj` file (also visible under the **Script metadata** page in VS project properties):
 
 | Property | Description |
 |---|---|
 | `ScriptName` | Name of the script — used as the `.script` filename and `name` field in `info.json`. If left empty, Release builds copy the raw .dll instead of packaging. |
 | `ScriptVersion` | Version string (e.g. `1.0.0`) written into `info.json`. Defaults to `1.0.0`. |
+| `ScriptType` | Type written into `info.json`: `script` for a regular script, `lib` for a library. Defaults to `script`. |
 | `ScriptAuthor` | Author name written into `info.json`. |
 | `ScriptDependencies` | Comma-separated list of dependencies in `Name:Version` format (e.g. `MSMR-Script-SDK:1.0.0`), written as the `dependencies` array in `info.json`. Leave empty if none. |
 

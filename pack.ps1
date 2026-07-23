@@ -3,6 +3,7 @@ param(
     [string]$OutputDir,
     [string]$ScriptName,
     [string]$ScriptVersion = "1.0.0",
+    [string]$ScriptType = "script",
     [string]$ScriptAuthor = "",
     [string]$ScriptDependencies = "",
     [string]$GameDirectory = ""
@@ -32,7 +33,7 @@ $scriptFile = Join-Path $OutputDir "$ScriptName.script"
 
 $info = [ordered]@{
     name           = $ScriptName
-    type           = "script"
+    type           = if ($ScriptType -ne "") { $ScriptType } else { "script" }
     author         = $ScriptAuthor
     version        = $ScriptVersion
     dependencies   = $dependencies
