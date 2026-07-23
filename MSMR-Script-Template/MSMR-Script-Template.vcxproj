@@ -101,7 +101,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)pack.ps1" -DllPath "$(OutDir)$(TargetName)$(TargetExt)" -OutputDir "$(OutDir)" -ScriptName "$(ScriptName)" -ScriptVersion "$(ScriptVersion)" -ScriptType "$(ScriptType)" -ScriptAuthor "$(ScriptAuthor)" -ScriptDependencies "$(ScriptDependencies)" -GameDirectory "$(GameDirectory)"</Command>
+      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)pack.ps1" -DllPath "$(OutDir)$(TargetName)$(TargetExt)" -OutputDir "$(OutDir.TrimEnd('\'))" -ScriptName "$(ScriptName)" -ScriptVersion "$(ScriptVersion)" -ScriptType "$(ScriptType)" -ScriptAuthor "$(ScriptAuthor)" -ScriptDependencies "$(ScriptDependencies)" -GameDirectory "$(GameDirectory.TrimEnd('\'))"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
