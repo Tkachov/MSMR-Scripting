@@ -33,9 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Pack|x64'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
-    <OutDir>$(Platform)\Release\</OutDir>
-    <TargetName>$(ProjectName)</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <OutDir>$(Platform)\Pack\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -58,6 +56,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LocalDebuggerCommand></LocalDebuggerCommand>
+  </PropertyGroup>
   <PropertyGroup Label="ScriptMetadata">
     <ScriptName></ScriptName>
     <ScriptVersion>1.0.0</ScriptVersion>
@@ -131,8 +132,12 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="BuildRelease" BeforeTargets="Build" Condition="'$(Configuration)|$(Platform)'=='Pack|x64'">
+    <MSBuild Projects="$(MSBuildProjectFile)" Properties="Configuration=Release;Platform=$(Platform)" Targets="Build" />
+  </Target>
   <Target Name="PackScript" AfterTargets="Build" Condition="'$(Configuration)|$(Platform)'=='Pack|x64'">
+    <MakeDir Directories="$(OutDir)" />
     <Exec Command="powershell -ExecutionPolicy Bypass -NoProfile -File &quot;$(SolutionDir)pack.ps1&quot;"
-          EnvironmentVariables="MSMR_DLL_PATH=$(OutDir)$(TargetName)$(TargetExt);MSMR_OUTPUT_DIR=$(OutDir);MSMR_SCRIPT_NAME=$(ScriptName);MSMR_SCRIPT_VERSION=$(ScriptVersion);MSMR_SCRIPT_TYPE=$(ScriptType);MSMR_SCRIPT_AUTHOR=$(ScriptAuthor);MSMR_SCRIPT_DEPS=$(ScriptDependencies);MSMR_GAME_DIR=$(GameDirectory)" />
+          EnvironmentVariables="MSMR_DLL_PATH=$(Platform)\Release\$(ProjectName).dll;MSMR_OUTPUT_DIR=$(OutDir);MSMR_SCRIPT_NAME=$(ScriptName);MSMR_SCRIPT_VERSION=$(ScriptVersion);MSMR_SCRIPT_TYPE=$(ScriptType);MSMR_SCRIPT_AUTHOR=$(ScriptAuthor);MSMR_SCRIPT_DEPS=$(ScriptDependencies);MSMR_GAME_DIR=" />
   </Target>
 </Project>
