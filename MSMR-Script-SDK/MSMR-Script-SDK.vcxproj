@@ -92,7 +92,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(GameDirectory)\scripts\</Command>
+      <Command>if not "$(GameDirectory)"=="" (copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(GameDirectory)\scripts\")</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -116,7 +116,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(GameDirectory)\scripts\</Command>
+      <Command>if not "$(GameDirectory)"=="" (copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(GameDirectory)\scripts\")</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

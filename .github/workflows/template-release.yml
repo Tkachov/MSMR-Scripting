@@ -1,0 +1,59 @@
+name: Template Release
+
+permissions:
+  contents: write
+  packages: read
+
+on:
+  push:
+    tags:
+      - "Template/v*"
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          runVcpkgInstall: true
+          vcpkgJsonGlob: "MSMR-Script-SDK/vcpkg.json"
+          vcpkgGitCommitId: "0b63bdd30d6716affc6fc0caef3886ca3022dc7b"
+        env:
+          VCPKG_BINARY_SOURCES: default,readwrite
+
+      - name: Restore vcpkg packages
+        shell: pwsh
+        run: vcpkg integrate install
+
+      - name: Build SDK release library
+        shell: pwsh
+        run: msbuild /p:Configuration=Release /p:Platform=x64 MSMR-Script-SDK\MSMR-Script-SDK.vcxproj
+
+      - name: Copy SDK import library
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "MSMR-Script-Template\lib" | Out-Null
+          Copy-Item "x64\Release\MSMR-Script-SDK.lib" "MSMR-Script-Template\lib\MSMR-Script-SDK.lib"
+
+      - name: Build template pack
+        shell: pwsh
+        run: msbuild /p:Configuration=Pack /p:Platform=x64 MSMR-Script-Template\MSMR-Script-Template.vcxproj
+
+      - name: Archive the .script
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "x64\Pack\MSMR-Script-Template.script" -DestinationPath "x64\Pack\MSMR-Script-Template.zip"
+
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          name: ${{ github.ref_name }}
+          body: ""
+          artifacts: "x64/Pack/MSMR-Script-Template.zip"
