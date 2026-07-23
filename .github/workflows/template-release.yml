@@ -46,9 +46,14 @@ jobs:
         shell: pwsh
         run: msbuild /p:Configuration=Pack /p:Platform=x64 MSMR-Script-Template\MSMR-Script-Template.vcxproj
 
+      - name: Archive the .script
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "x64\Pack\MSMR-Script-Template.script" -DestinationPath "x64\Pack\MSMR-Script-Template.zip"
+
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
           name: ${{ github.ref_name }}
           body: ""
-          artifacts: "x64/Pack/MSMR-Script-Template.script"
+          artifacts: "x64/Pack/MSMR-Script-Template.zip"

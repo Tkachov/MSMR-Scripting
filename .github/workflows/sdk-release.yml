@@ -58,20 +58,20 @@ jobs:
             Copy-Item $_.FullName $destinationPath
           }
 
-          if (Test-Path "x64\Pack\MSMR-Script-SDK.script.zip") {
-            Remove-Item "x64\Pack\MSMR-Script-SDK.script.zip" -Force
+          if (Test-Path "x64\Pack\MSMR-Script-SDK.zip") {
+            Remove-Item "x64\Pack\MSMR-Script-SDK.zip" -Force
           }
 
-          if (Test-Path "x64\Pack\MSMR-Script-SDK-sdk.zip") {
-            Remove-Item "x64\Pack\MSMR-Script-SDK-sdk.zip" -Force
+          if (Test-Path "x64\Pack\MSMR-Script-SDK-dev.zip") {
+            Remove-Item "x64\Pack\MSMR-Script-SDK-dev.zip" -Force
           }
 
-          Compress-Archive -Path "x64\Pack\MSMR-Script-SDK.script" -DestinationPath "x64\Pack\MSMR-Script-SDK.script.zip"
-          Compress-Archive -Path (Join-Path $packageDir "*") -DestinationPath "x64\Pack\MSMR-Script-SDK-sdk.zip"
+          Compress-Archive -Path "x64\Pack\MSMR-Script-SDK.script" -DestinationPath "x64\Pack\MSMR-Script-SDK.zip"
+          Compress-Archive -Path (Join-Path $packageDir "*") -DestinationPath "x64\Pack\MSMR-Script-SDK-dev.zip"
 
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
           name: ${{ github.ref_name }}
           body: ""
-          artifacts: "x64/Pack/MSMR-Script-SDK.script.zip,x64/Pack/MSMR-Script-SDK-sdk.zip"
+          artifacts: "x64/Pack/MSMR-Script-SDK.zip,x64/Pack/MSMR-Script-SDK-dev.zip"

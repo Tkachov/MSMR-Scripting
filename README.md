@@ -14,12 +14,6 @@ To build the SDK .dll, you'd need to use vcpkg to download the dependencies. You
 
 Both SDK's and template script's projects have an extra property, `$GameDirectory`, which can be set via project properties in MSVC. As a post-build step, .dll is copied to 'scripts/' subfolder of that directory. You could also setup debug target to be the game executable with `-scripts -console` arguments for easier debugging.
 
-# Releasing
-
-Push a `SDK/v*` tag to build an SDK release with `MSMR-Script-SDK.script.zip` and `MSMR-Script-SDK-sdk.zip`.
-
-Push a `Template/v*` tag to build a template release with `MSMR-Script-Template.script`.
-
 # Credits and license
 
 SDK code is heavily based on LDD565's [SM2ScriptTemplate](https://github.com/hbgda/SM2ScriptTemplate).
