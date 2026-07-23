@@ -1,12 +1,12 @@
 param(
-    [string]$DllPath,
-    [string]$OutputDir,
-    [string]$ScriptName,
-    [string]$ScriptVersion = "1.0.0",
-    [string]$ScriptType = "script",
-    [string]$ScriptAuthor = "",
-    [string]$ScriptDependencies = "",
-    [string]$GameDirectory = ""
+    [string]$DllPath = $env:MSMR_DLL_PATH,
+    [string]$OutputDir = $env:MSMR_OUTPUT_DIR,
+    [string]$ScriptName = $env:MSMR_SCRIPT_NAME,
+    [string]$ScriptVersion = $env:MSMR_SCRIPT_VERSION,
+    [string]$ScriptType = $env:MSMR_SCRIPT_TYPE,
+    [string]$ScriptAuthor = $env:MSMR_SCRIPT_AUTHOR,
+    [string]$ScriptDependencies = $env:MSMR_SCRIPT_DEPS,
+    [string]$GameDirectory = $env:MSMR_GAME_DIR
 )
 
 if (-not $ScriptName) {
