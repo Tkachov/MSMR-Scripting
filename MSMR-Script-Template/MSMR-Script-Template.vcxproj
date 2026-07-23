@@ -5,6 +5,10 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Pack|x64">
+      <Configuration>Pack</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
@@ -26,6 +30,11 @@
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Pack|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <OutDir>$(Platform)\Pack\</OutDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -41,9 +50,19 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Pack|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <PropertyGroup Label="ScriptMetadata">
+    <ScriptName>MSMR-Script-Template</ScriptName>
+    <ScriptVersion>1.0.0</ScriptVersion>
+    <ScriptType>script</ScriptType>
+    <ScriptAuthor>Tkachov</ScriptAuthor>
+    <ScriptDependencies>MSMR-Script-SDK:&gt;=4.630.0</ScriptDependencies>
+  </PropertyGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgUseStatic>true</VcpkgUseStatic>
@@ -113,4 +132,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="BuildRelease" BeforeTargets="Build" Condition="'$(Configuration)|$(Platform)'=='Pack|x64'">
+    <MSBuild Projects="$(MSBuildProjectFile)" Properties="Configuration=Release;Platform=$(Platform)" Targets="Build" />
+  </Target>
+  <Target Name="PackScript" AfterTargets="Build" Condition="'$(Configuration)|$(Platform)'=='Pack|x64'">
+    <MakeDir Directories="$(OutDir)" />
+    <Exec Command="powershell -ExecutionPolicy Bypass -NoProfile -File &quot;$(SolutionDir)pack.ps1&quot;" EnvironmentVariables="MSMR_DLL_PATH=..\$(Platform)\Release\$(ProjectName).dll;MSMR_OUTPUT_DIR=$(OutDir);MSMR_SCRIPT_NAME=$(ScriptName);MSMR_SCRIPT_VERSION=$(ScriptVersion);MSMR_SCRIPT_TYPE=$(ScriptType);MSMR_SCRIPT_AUTHOR=$(ScriptAuthor);MSMR_SCRIPT_DEPS=$(ScriptDependencies)" />
+    <MakeDir Directories="$(SolutionDir)$(Platform)\Pack\" />
+    <Copy SourceFiles="$(OutDir)$(ScriptName).script" DestinationFolder="$(SolutionDir)$(Platform)\Pack\" />
+  </Target>
 </Project>
