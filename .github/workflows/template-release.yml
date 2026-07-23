@@ -39,8 +39,9 @@ jobs:
       - name: Copy SDK import library
         shell: pwsh
         run: |
+          $sdkLibPath = (Resolve-Path "MSMR-Script-SDK\x64\Release\MSMR-Script-SDK.lib").Path
           New-Item -ItemType Directory -Force -Path "MSMR-Script-Template\lib" | Out-Null
-          Copy-Item "x64\Release\MSMR-Script-SDK.lib" "MSMR-Script-Template\lib\MSMR-Script-SDK.lib"
+          Copy-Item $sdkLibPath "MSMR-Script-Template\lib\MSMR-Script-SDK.lib"
 
       - name: Build template pack
         shell: pwsh
