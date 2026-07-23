@@ -44,7 +44,11 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <ScriptName></ScriptName>
+    <ScriptVersion>1.0.0</ScriptVersion>
+    <ScriptAuthor></ScriptAuthor>
+  </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgUseStatic>true</VcpkgUseStatic>
   </PropertyGroup>
@@ -94,7 +98,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(GameDirectory)\scripts\</Command>
+      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)pack.ps1" -DllPath "$(OutDir)$(TargetName)$(TargetExt)" -OutputDir "$(OutDir)" -ScriptName "$(ScriptName)" -ScriptVersion "$(ScriptVersion)" -ScriptAuthor "$(ScriptAuthor)" -GameDirectory "$(GameDirectory)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
