@@ -15,7 +15,7 @@ if (-not $ScriptName) {
 
 $dependencies = @()
 if ($ScriptDependencies -ne "") {
-    $dependencies = $ScriptDependencies -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
+    $dependencies = @($ScriptDependencies -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" })
 }
 
 $infoPath = Join-Path $OutputDir "info.json"
