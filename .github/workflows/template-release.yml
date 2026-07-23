@@ -24,7 +24,7 @@ jobs:
         with:
           runVcpkgInstall: true
           vcpkgJsonGlob: "MSMR-Script-SDK/vcpkg.json"
-          vcpkgGitCommitId: "0b63bdd30d6716affc6fc0caef3886ca3022dc7b"
+          vcpkgGitCommitId: "e861f04798ca54fa70ff906b5e43e5fc99b7f406"
         env:
           VCPKG_BINARY_SOURCES: default,readwrite
 
