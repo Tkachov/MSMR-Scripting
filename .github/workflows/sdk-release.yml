@@ -41,6 +41,7 @@ jobs:
         run: |
           $packageDir = Join-Path $env:RUNNER_TEMP "MSMR-Script-SDK"
           $headersRoot = (Resolve-Path "MSMR-Script-SDK\game").Path
+          $sdkLibPath = (Resolve-Path "MSMR-Script-SDK\x64\Release\MSMR-Script-SDK.lib").Path
           $includeRoot = Join-Path $packageDir "include\game"
           $libRoot = Join-Path $packageDir "lib"
 
@@ -50,7 +51,7 @@ jobs:
 
           New-Item -ItemType Directory -Force -Path $includeRoot, $libRoot | Out-Null
 
-          Copy-Item "x64\Release\MSMR-Script-SDK.lib" $libRoot
+          Copy-Item $sdkLibPath $libRoot
           Get-ChildItem $headersRoot -Filter *.h -Recurse | ForEach-Object {
             $relativePath = $_.FullName.Substring($headersRoot.Length + 1)
             $destinationPath = Join-Path $includeRoot $relativePath
