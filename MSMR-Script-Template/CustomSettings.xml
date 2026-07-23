@@ -10,21 +10,4 @@
 						Subtype="folder">
 		</StringProperty>
 	</Rule>
-	<Rule Name="ScriptMetadata" PageTemplate="generic" DisplayName="Script metadata">
-		<Rule.DataSource>
-			<DataSource Persistence="ProjectFile"/>
-		</Rule.DataSource>
-		<StringProperty Name="ScriptName"
-						DisplayName="Script Name"
-						Description="Name of the script, used as the .script package filename and in info.json">
-		</StringProperty>
-		<StringProperty Name="ScriptVersion"
-						DisplayName="Script Version"
-						Description="Version of the script (e.g. 1.0.0), written into info.json">
-		</StringProperty>
-		<StringProperty Name="ScriptAuthor"
-						DisplayName="Script Author"
-						Description="Author of the script, written into info.json">
-		</StringProperty>
-	</Rule>
 </ProjectSchemaDefinitions>

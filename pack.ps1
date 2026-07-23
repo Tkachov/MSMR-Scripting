@@ -4,6 +4,7 @@ param(
     [string]$ScriptName,
     [string]$ScriptVersion = "1.0.0",
     [string]$ScriptAuthor = "",
+    [string]$ScriptDependencies = "",
     [string]$GameDirectory = ""
 )
 
@@ -20,6 +21,11 @@ if (-not $ScriptName) {
     exit 0
 }
 
+$dependencies = @()
+if ($ScriptDependencies -ne "") {
+    $dependencies = $ScriptDependencies -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
+}
+
 $infoPath = Join-Path $OutputDir "info.json"
 $zipFile = Join-Path $OutputDir "$ScriptName.zip"
 $scriptFile = Join-Path $OutputDir "$ScriptName.script"
@@ -29,6 +35,7 @@ $info = [ordered]@{
     type           = "script"
     author         = $ScriptAuthor
     version        = $ScriptVersion
+    dependencies   = $dependencies
     game           = "MSMR"
     format_version = 1
 }

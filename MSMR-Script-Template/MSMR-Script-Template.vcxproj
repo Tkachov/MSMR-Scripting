@@ -48,6 +48,7 @@
     <ScriptName></ScriptName>
     <ScriptVersion>1.0.0</ScriptVersion>
     <ScriptAuthor></ScriptAuthor>
+    <ScriptDependencies></ScriptDependencies>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgUseStatic>true</VcpkgUseStatic>
@@ -98,7 +99,7 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)pack.ps1" -DllPath "$(OutDir)$(TargetName)$(TargetExt)" -OutputDir "$(OutDir)" -ScriptName "$(ScriptName)" -ScriptVersion "$(ScriptVersion)" -ScriptAuthor "$(ScriptAuthor)" -GameDirectory "$(GameDirectory)"</Command>
+      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)pack.ps1" -DllPath "$(OutDir)$(TargetName)$(TargetExt)" -OutputDir "$(OutDir)" -ScriptName "$(ScriptName)" -ScriptVersion "$(ScriptVersion)" -ScriptAuthor "$(ScriptAuthor)" -ScriptDependencies "$(ScriptDependencies)" -GameDirectory "$(GameDirectory)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
