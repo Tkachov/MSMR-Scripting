@@ -5,21 +5,12 @@ param(
     [string]$ScriptVersion = $env:MSMR_SCRIPT_VERSION,
     [string]$ScriptType = $env:MSMR_SCRIPT_TYPE,
     [string]$ScriptAuthor = $env:MSMR_SCRIPT_AUTHOR,
-    [string]$ScriptDependencies = $env:MSMR_SCRIPT_DEPS,
-    [string]$GameDirectory = $env:MSMR_GAME_DIR
+    [string]$ScriptDependencies = $env:MSMR_SCRIPT_DEPS
 )
 
 if (-not $ScriptName) {
-    Write-Warning "ScriptName is not set, skipping .script packaging."
-    if ($GameDirectory -ne "" -and (Test-Path $GameDirectory)) {
-        $scriptsDir = Join-Path $GameDirectory "scripts"
-        if (-not (Test-Path $scriptsDir)) {
-            New-Item -ItemType Directory -Path $scriptsDir | Out-Null
-        }
-        Copy-Item -Path $DllPath -Destination $scriptsDir -Force
-        Write-Output "Copied $DllPath to $scriptsDir"
-    }
-    exit 0
+    Write-Warning "Can't pack .script with ScriptName unset."
+    exit 1
 }
 
 $dependencies = @()
@@ -51,14 +42,4 @@ Compress-Archive -Path $infoPath -DestinationPath $zipFile
 Compress-Archive -Update -Path $DllPath -DestinationPath $zipFile
 
 Rename-Item -Path $zipFile -NewName "$ScriptName.script" -Force
-
 Write-Output "Created $scriptFile"
-
-if ($GameDirectory -ne "" -and (Test-Path $GameDirectory)) {
-    $scriptsDir = Join-Path $GameDirectory "scripts"
-    if (-not (Test-Path $scriptsDir)) {
-        New-Item -ItemType Directory -Path $scriptsDir | Out-Null
-    }
-    Copy-Item -Path $scriptFile -Destination $scriptsDir -Force
-    Write-Output "Copied to $scriptsDir"
-}
