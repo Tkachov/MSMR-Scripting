@@ -137,7 +137,7 @@
   </Target>
   <Target Name="PackScript" AfterTargets="Build" Condition="'$(Configuration)|$(Platform)'=='Pack|x64'">
     <MakeDir Directories="$(OutDir)" />
-    <Exec Command="powershell -ExecutionPolicy Bypass -NoProfile -File &quot;$(MSBuildProjectDirectory)\..\pack.ps1&quot;" EnvironmentVariables="MSMR_DLL_PATH=..\$(Platform)\Release\$(ProjectName).dll;MSMR_OUTPUT_DIR=$(OutDir);MSMR_SCRIPT_NAME=$(ScriptName);MSMR_SCRIPT_VERSION=$(ScriptVersion);MSMR_SCRIPT_TYPE=$(ScriptType);MSMR_SCRIPT_AUTHOR=$(ScriptAuthor);MSMR_SCRIPT_DEPS=$(ScriptDependencies)" />
+    <Exec Command="powershell -ExecutionPolicy Bypass -NoProfile -File &quot;$(MSBuildProjectDirectory)\..\pack.ps1&quot;" EnvironmentVariables="MSMR_DLL_PATH=$(SolutionDir)$(Platform)\Release\$(ProjectName).dll;MSMR_OUTPUT_DIR=$(OutDir);MSMR_SCRIPT_NAME=$(ScriptName);MSMR_SCRIPT_VERSION=$(ScriptVersion);MSMR_SCRIPT_TYPE=$(ScriptType);MSMR_SCRIPT_AUTHOR=$(ScriptAuthor);MSMR_SCRIPT_DEPS=$(ScriptDependencies)" />
     <MakeDir Directories="$(MSBuildProjectDirectory)\..\$(Platform)\Pack\" />
     <Copy SourceFiles="$(OutDir)$(ScriptName).script" DestinationFolder="$(MSBuildProjectDirectory)\..\$(Platform)\Pack\" />
   </Target>
