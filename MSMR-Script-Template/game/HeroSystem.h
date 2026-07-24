@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Native.h"
 #include "Actor.h"
 #include "ActorHandle.h"
+#include "Native.h"
 
 class HeroSystem {
     void** _vftable;

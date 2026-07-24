@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Native.h"
-
 struct Vector3 {
     float x, y, z;
 
@@ -39,10 +37,11 @@ inline Vector3 operator*(float scalar, const Vector3& v) {
     return v * scalar;
 }
 
-struct Transform {
+class Transform {
     char _0x0[0x30];
     Vector3 _position;
 
+public:
     inline Vector3& GetPosition() {
         return _position;
     }

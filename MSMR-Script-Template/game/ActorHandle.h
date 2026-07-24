@@ -3,7 +3,6 @@
 #include <cstdint>
 
 class ActorHandle {
-private:
     uint32_t _handle = 0;
 
 public:

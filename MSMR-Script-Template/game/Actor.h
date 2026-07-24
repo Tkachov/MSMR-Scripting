@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Native.h"
 #include "ActorHandle.h"
+#include "Native.h"
 #include "Transform.h"
 
 class Actor {
@@ -10,8 +10,9 @@ class Actor {
 
 public:
     inline Vector3& GetPosition() {
-        if (_transform)
+        if (_transform) {
             return _transform->GetPosition();
+        }
 
         static Vector3 invalid = Vector3 { -1e6, -1e6, -1e6 };
         return invalid;
